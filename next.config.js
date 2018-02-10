@@ -6,6 +6,19 @@ module.exports = {
       fs: "empty"
     };
 
+    // conf.plugins.push(new webpack.EnvironmentPlugin(localEnv));
+    // if(!dev) {
+    //     conf.plugins.push(
+    //         new BundleAnalyzerPlugin({
+    //             // For all options see https://github.com/th0r/webpack-bundle-analyzer#as-plugin
+    //             analyzerMode: dev ? "server" : "static",
+    //             analyzerHost: "127.0.0.1",
+    //             analyzerPort: 8085,
+    //             openAnalyzer: false
+    //         })
+    //     );
+    // }
+
     // config.module.rules.push({
     //   test: /\.(sc|c)ss$/,
     //   use: [
