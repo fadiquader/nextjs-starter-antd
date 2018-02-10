@@ -63,6 +63,7 @@
     "eslint-config-xo-react": "^0.13.0",
     "eslint-config-xo-space": "^0.16.0",
     "eslint-plugin-react": "^7.3.0",
+    "extract-text-webpack-plugin": "^3.0.2",
     "ionicons": "^3.0.0",
     "postcss-loader": "^2.1.0",
     "styled-jsx-css-loader": "^0.3.0",
