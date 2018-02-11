@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/bin/yarn add @zeit/next-css
+  /usr/local/bin/node /usr/bin/yarn add style-loader@^0.19.1
 
 PATH: 
   /home/fadiqua/bin:/home/fadiqua/.local/bin:/home/fadiqua/bin:/home/fadiqua/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
@@ -79,8 +79,11 @@ npm manifest:
       "eslint-config-xo-react": "^0.13.0",
       "eslint-config-xo-space": "^0.16.0",
       "eslint-plugin-react": "^7.3.0",
+      "extract-text-webpack-plugin": "^3.0.2",
+      "ignore-loader": "^0.1.2",
       "ionicons": "^3.0.0",
       "postcss-loader": "^2.1.0",
+      "style-loader": "^0.20.1",
       "styled-jsx-css-loader": "^0.3.0",
       "xo": "^0.18.2"
     },
@@ -458,7 +461,7 @@ Lockfile:
     version "0.2.10"
     resolved "https://registry.yarnpkg.com/async/-/async-0.2.10.tgz#b6bbe0b0674b9d719708ca38de8c237cb526c3d1"
   
-  async@^2.1.2, async@^2.1.5:
+  async@^2.1.2, async@^2.1.5, async@^2.4.1:
     version "2.6.0"
     resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
     dependencies:
@@ -2855,6 +2858,15 @@ Lockfile:
     dependencies:
       is-extglob "^1.0.0"
   
+  extract-text-webpack-plugin@^3.0.2:
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/extract-text-webpack-plugin/-/extract-text-webpack-plugin-3.0.2.tgz#5f043eaa02f9750a9258b78c0a6e0dc1408fb2f7"
+    dependencies:
+      async "^2.4.1"
+      loader-utils "^1.1.0"
+      schema-utils "^0.3.0"
+      webpack-sources "^1.0.1"
+  
   extsprintf@1.3.0, extsprintf@^1.2.0:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
@@ -3474,6 +3486,10 @@ Lockfile:
   iferr@^0.1.5:
     version "0.1.5"
     resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
+  
+  ignore-loader@^0.1.2:
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/ignore-loader/-/ignore-loader-0.1.2.tgz#d81f240376d0ba4f0d778972c3ad25874117a463"
   
   ignore@^3.2.0, ignore@^3.2.6, ignore@^3.3.3:
     version "3.3.7"
@@ -6692,7 +6708,13 @@ Lockfile:
     version "1.2.4"
     resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   
-  schema-utils@^0.4.0, schema-utils@^0.4.2:
+  schema-utils@^0.3.0:
+    version "0.3.0"
+    resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
+    dependencies:
+      ajv "^5.0.0"
+  
+  schema-utils@^0.4.0, schema-utils@^0.4.2, schema-utils@^0.4.3:
     version "0.4.3"
     resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.4.3.tgz#e2a594d3395834d5e15da22b48be13517859458e"
     dependencies:
@@ -7079,6 +7101,13 @@ Lockfile:
   strip-json-comments@~2.0.1:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
+  
+  style-loader@^0.20.1:
+    version "0.20.1"
+    resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.20.1.tgz#33ac2bf4d5c65a8906bc586ad253334c246998d0"
+    dependencies:
+      loader-utils "^1.1.0"
+      schema-utils "^0.4.3"
   
   styled-jsx-css-loader@^0.3.0:
     version "0.3.0"

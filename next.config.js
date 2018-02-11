@@ -1,4 +1,5 @@
 const path = require("path");
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   webpack: (config, { dev, isServer }) => {
@@ -6,7 +7,78 @@ module.exports = {
       fs: "empty"
     };
 
-    // conf.plugins.push(new webpack.EnvironmentPlugin(localEnv));
+    let loaders = [];
+    let lessUse = [];
+    const cssLoader = {
+      loader: isServer ? 'css-loader/locals' : 'css-loader',
+      options: {
+        modules: false,
+        minimize: !dev,
+        sourceMap: dev,
+        importLoaders: 1
+      }
+    }
+
+    let postcssLoader = {
+      loader: 'postcss-loader'
+    }
+
+    let lessLoader = {
+      loader: 'less-loader'
+    }
+
+    let extractLESSPlugin = new ExtractTextPlugin({
+      filename: 'static/style-ant.css',
+    });
+    let extractCSSPlugin = new ExtractTextPlugin({
+      filename: 'static/style.css',
+      disable: dev
+    });
+    config.plugins.push(extractLESSPlugin)
+    config.plugins.push(extractCSSPlugin)
+    //
+    // if (!extractCSSPlugin.options.disable) {
+    //   extractCSSPlugin.options.disable = dev
+    // }
+    // if (!extractLESSPlugin.options.disable) {
+    //   extractLESSPlugin.options.disable = dev
+    // }
+
+    if (isServer && cssLoader.options.modules) {
+      lessUse = [cssLoader, postcssLoader, lessLoader].filter(Boolean)
+    } else if(isServer && !cssLoader.options.modules) {
+      lessUse = ['ignore-loader']
+    } else {
+      lessUse = extractLESSPlugin.extract({
+        use: [cssLoader, postcssLoader, lessLoader].filter(Boolean),
+        // Use style-loader in development
+        fallback: {
+          loader: 'style-loader',
+          options: {
+            sourceMap: dev,
+            importLoaders: 1
+          }
+        }
+      });
+    }
+    // const exractCssPlugin = extractCss.extract({
+    //   use: [...loaders].filter(Boolean),
+    //   // Use style-loader in development
+    //   fallback: {
+    //     loader: 'style-loader',
+    //     options: {
+    //       sourceMap: dev,
+    //       importLoaders: 1
+    //     }
+    //   }
+    // });
+
+
+    config.module.rules.push({
+      test: /\.less$/,
+      use: lessUse
+    })
+        // conf.plugins.push(new webpack.EnvironmentPlugin(localEnv));
     // if(!dev) {
     //     conf.plugins.push(
     //         new BundleAnalyzerPlugin({
@@ -72,24 +144,24 @@ module.exports = {
     //   ]
     // });
 
-    config.module.rules.push(
-      {
-        test: /\.(css|scss)/,
-        loader: 'emit-file-loader',
-        options: {
-          name: 'dist/[path][name].[ext]'
-        },
-
-      },
-      {
-        test: /\.css$/,
-        loader: 'babel-loader!raw-loader'
-      },
-      {
-        test: /\.scss$/,
-        loader: 'babel-loader!raw-loader!sass-loader'
-      }
-    )
+    // config.module.rules.push(
+    //   {
+    //     test: /\.(css|scss)/,
+    //     loader: 'emit-file-loader',
+    //     options: {
+    //       name: 'dist/[path][name].[ext]'
+    //     },
+    //
+    //   },
+    //   {
+    //     test: /\.css$/,
+    //     loader: 'babel-loader!raw-loader'
+    //   },
+    //   {
+    //     test: /\.scss$/,
+    //     loader: 'babel-loader!raw-loader!sass-loader'
+    //   }
+    // )
     return config
   }
 }

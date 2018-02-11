@@ -11,7 +11,7 @@ import { NextAuth } from 'next-auth/client'
 import Cookies from 'universal-cookie'
 import Package from '../package'
 import PageWithIntl from '../components/PageWithIntl'
-import Styles from '../css/index.scss'
+// import Styles from '../css/index.scss'
 // import stylesheet from "../styles/index.less";
 
 export class Layout extends React.Component {
@@ -68,7 +68,7 @@ export class Layout extends React.Component {
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <title>{this.props.title || 'Next.js Starter Project'}</title>
-          <style dangerouslySetInnerHTML={{__html: Styles}}/>
+          {/*<style dangerouslySetInnerHTML={{__html: Styles}}/>*/}
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
         </Head>
         {/*<style jsx global>{stylesheet}</style>*/}

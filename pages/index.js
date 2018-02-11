@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import React from 'react'
-import { Container, Row, Col, Button, Jumbotron, ListGroup, ListGroupItem } from 'reactstrap'
+import { Container, Row, Col, Jumbotron, ListGroup, ListGroupItem } from 'reactstrap'
 import {FormattedMessage, FormattedNumber, defineMessages, FormattedRelative} from 'react-intl'
+import { Button } from 'antd';
 
 import Page from '../components/page'
 import Layout from '../components/layout'
-import PageWithIntl from '../components/PageWithIntl'
 import NProgress from '../components/NProgress'
+
+import '../styles/index.less';
 
 const {description} = defineMessages({
   description: {
@@ -25,6 +27,7 @@ class Home extends Page {
           boxShadow: 'inset 0 0 100px rgba(0,0,0,0.1)'
           }}>
           <Container className="mt-2 mb-2">
+            <Button>Hola Ant!</Button>
             <h1 className="display-2 mb-3" style={{fontWeight: 300}}>
               <span style={{fontWeight: 600}}>
                 <span className="mr-3">▲</span>
