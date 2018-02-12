@@ -6,7 +6,7 @@ import Link from 'next/link'
 import SyntaxHighlighter from 'react-syntax-highlighter/prism'
 import { atomDark as SyntaxHighlighterTheme } from 'react-syntax-highlighter/styles/prism'
 import { Col, Row } from 'reactstrap'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+
 import Page from '../components/page'
 import Layout from '../components/layout'
 import Loader from '../components/loader'
@@ -94,15 +94,15 @@ export class Table extends React.Component {
     const numberFrom = numberTo - this.props.data.length + 1
     return (
       <React.Fragment>
-        <BootstrapTable pagination hover bordered={false}
-          remote={true}
-          data={this.props.data}
-          fetchInfo={ {dataTotalSize: this.props.totalSize} }
-          options={ this.props.options }>
-            <TableHeaderColumn isKey dataField="_id">ID</TableHeaderColumn>
-            <TableHeaderColumn dataField="name">Name</TableHeaderColumn>
-            <TableHeaderColumn dataField="email">Email</TableHeaderColumn>
-        </BootstrapTable>
+        {/*<BootstrapTable pagination hover bordered={false}*/}
+          {/*remote={true}*/}
+          {/*data={this.props.data}*/}
+          {/*fetchInfo={ {dataTotalSize: this.props.totalSize} }*/}
+          {/*options={ this.props.options }>*/}
+            {/*<TableHeaderColumn isKey dataField="_id">ID</TableHeaderColumn>*/}
+            {/*<TableHeaderColumn dataField="name">Name</TableHeaderColumn>*/}
+            {/*<TableHeaderColumn dataField="email">Email</TableHeaderColumn>*/}
+        {/*</BootstrapTable>*/}
         <p className="mt-2 text-muted text-right">
           Displaying <strong>{numberFrom}-{numberTo}</strong> of <strong>{this.props.totalSize}</strong>
         </p>

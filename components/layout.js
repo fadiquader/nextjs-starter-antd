@@ -2,17 +2,15 @@ import React from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Container, Row, Col, Nav, NavItem, Form, NavLink, Collapse,
-         Navbar, NavbarToggler, NavbarBrand, Modal, ModalHeader, ModalBody,
-         ModalFooter, ListGroup, ListGroupItem } from 'reactstrap'
+// import { Container, Row, Col, Nav, NavItem, Form, NavLink, Collapse,
+//          Navbar, NavbarToggler, NavbarBrand, Modal, ModalHeader, ModalBody,
+//          ModalFooter, ListGroup, ListGroupItem } from 'reactstrap'
 import { Button } from 'antd';
 import Signin from './signin'
 import { NextAuth } from 'next-auth/client'
 import Cookies from 'universal-cookie'
 import Package from '../package'
 import PageWithIntl from '../components/PageWithIntl'
-// import Styles from '../css/index.scss'
-// import stylesheet from "../styles/index.less";
 
 export class Layout extends React.Component {
 
@@ -72,16 +70,16 @@ export class Layout extends React.Component {
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
         </Head>
         {/*<style jsx global>{stylesheet}</style>*/}
-        <Navbar light className="navbar navbar-expand-md pt-3 pb-3">
+        <nav light className="navbar navbar-expand-md pt-3 pb-3">
           <Link prefetch href="/">
-            <NavbarBrand href="/">
+            <span href="/">
               <span className="icon ion-md-home mr-1"></span> {Package.name}
-            </NavbarBrand>
+            </span>
           </Link>
           <input className="nojs-navbar-check" id="nojs-navbar-check" type="checkbox" aria-label="Menu"/>
           <label tabIndex="1" htmlFor="nojs-navbar-check" className="nojs-navbar-label mt-2" />
           <div className="nojs-navbar">
-            <Nav navbar>
+            <nav >
               <div tabIndex="1" className="dropdown nojs-dropdown">
                 <div className="nav-item">
                   <span className="dropdown-toggle nav-link">Examples</span>
@@ -111,14 +109,18 @@ export class Layout extends React.Component {
                 </div>
                 <Button type="primary">test ant</Button>
               </div>
-            </Nav>
+            </nav>
             <UserMenu session={this.props.session} toggleModal={this.toggleModal} signinBtn={this.props.signinBtn}/>
           </div>
-        </Navbar>
-        <MainBody navmenu={this.props.navmenu} fluid={this.props.fluid} container={this.props.container}>
+        </nav>
+        <div
+          // navmenu={this.props.navmenu} fluid={this.props.fluid} container={this.props.container}
+        >
           {this.props.children}
-        </MainBody>
-        <Container fluid={this.props.fluid}>
+        </div>
+        <div
+          // fluid={this.props.fluid}
+        >
           <hr className="mt-3"/>
           <p className="text-muted small">
             <Link href="https://github.com/iaincollins/nextjs-starter"><a className="text-muted font-weight-bold"><span className="icon ion-logo-github"/> {Package.name} {Package.version}</a></Link>
@@ -129,7 +131,7 @@ export class Layout extends React.Component {
             .
             <span className="ml-2">&copy; {new Date().getYear() + 1900}.</span>
           </p>
-        </Container>
+        </div>
         <SigninModal modal={this.state.modal} toggleModal={this.toggleModal} session={this.props.session} providers={this.state.providers}/>
       </React.Fragment>
     )
@@ -206,7 +208,7 @@ export class UserMenu extends React.Component {
       // If signed in display user dropdown menu
       const session = this.props.session
       return (
-        <Nav className="ml-auto" navbar>
+        <nav>
           {/*<!-- Uses .nojs-dropdown CSS to for a dropdown that works without client side JavaScript ->*/}
           <div tabIndex="2" className="dropdown nojs-dropdown">
             <div className="nav-item">
@@ -225,14 +227,14 @@ export class UserMenu extends React.Component {
               <AdminMenuItem {...this.props}/>
               <div className="dropdown-divider d-none d-md-block"/>
               <div className="dropdown-item p-0">
-                <Form id="signout" method="post" action="/auth/signout" onSubmit={this.handleSignoutSubmit}>
+                <form id="signout" method="post" action="/auth/signout" onSubmit={this.handleSignoutSubmit}>
                   <input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>
-                  <Button type="submit" block className="pl-4 rounded-0 text-left dropdown-item"><span className="icon ion-md-log-out mr-1"></span> Sign out</Button>
-                </Form>
+                  <input type="submit" block className="pl-4 rounded-0 text-left dropdown-item"><span className="icon ion-md-log-out mr-1"></span> Sign out</input>
+                </form>
               </div>
             </div>
           </div>
-        </Nav>
+        </nav>
       )
      } if (this.props.signinBtn === false) {
        // If not signed in, don't display sign in button if disabled
@@ -240,16 +242,16 @@ export class UserMenu extends React.Component {
     } else {
       // If not signed in, display sign in button
       return (
-        <Nav className="ml-auto" navbar>
-          <NavItem>
+        <nav>
+          <div>
             {/**
               * @TODO Add support for passing current URL path as redirect URL
               * so that users without JavaScript are also redirected to the page
               * they were on before they signed in.
               **/}
             <a href="/auth?redirect=/" className="btn btn-outline-primary" onClick={this.props.toggleModal}><span className="icon ion-md-log-in mr-1"></span> Sign up / Sign in</a>
-          </NavItem>
-        </Nav>
+          </div>
+        </nav>
       )
     }
   }
@@ -276,12 +278,12 @@ export class SigninModal extends React.Component {
     if (this.props.providers === null) return null
     
     return (
-      <Modal isOpen={this.props.modal} toggle={this.props.toggleModal} style={{maxWidth: 700}}>
-        <ModalHeader>Sign up / Sign in</ModalHeader>
-        <ModalBody style={{padding: '1em 2em'}}>
+      <div style={{maxWidth: 700}}>
+        <header>Sign up / Sign in</header>
+        <div style={{padding: '1em 2em'}}>
           <Signin session={this.props.session} providers={this.props.providers}/>
-        </ModalBody>
-      </Modal>
+        </div>
+      </div>
     )
   }
 }

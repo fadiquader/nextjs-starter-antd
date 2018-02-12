@@ -1,6 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import { Row, Col, Form, Input, Label, Button } from 'reactstrap'
+// import { Row, Col, Form, Input, Label, Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
 import { NextAuth } from 'next-auth/client'
 
@@ -49,23 +49,23 @@ export default class extends React.Component {
       return (
         <React.Fragment>
           <p className="text-center" style={{marginTop: 10, marginBottom: 30}}>{`If you don't have an account, one will be created when you sign in.`}</p>
-          <Row>
-            <Col xs={12} md={6}>
+          <div>
+            <div >
               <SignInButtons providers={this.props.providers}/>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form id="signin" method="post" action="/auth/email/signin" onSubmit={this.handleSubmit}>
-                <Input name="_csrf" type="hidden" value={this.state.session.csrfToken}/>
+            </div>
+            <div >
+              <form id="signin" method="post" action="/auth/email/signin" onSubmit={this.handleSubmit}>
+                <input name="_csrf" type="hidden" value={this.state.session.csrfToken}/>
                 <p>
-                  <Label htmlFor="email">Email address</Label><br/>
-                  <Input name="email" type="text" placeholder="j.smith@example.com" id="email" className="form-control" value={this.state.email} onChange={this.handleEmailChange}/>
+                  <label htmlFor="email">Email address</label><br/>
+                  <input name="email" type="text" placeholder="j.smith@example.com" id="email" className="form-control" value={this.state.email} onChange={this.handleEmailChange}/>
                 </p>
                 <p className="text-right">
-                  <Button id="submitButton" outline color="dark" type="submit">Sign in with email</Button>
+                  <button id="submitButton" outline color="dark" type="submit">Sign in with email</button>
                 </p>
-              </Form>
-            </Col>
-          </Row>
+              </form>
+            </div>
+          </div>
         </React.Fragment>
       )
     }
