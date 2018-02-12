@@ -1,5 +1,6 @@
 const path = require("path");
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const theme = require('./theme');
 
 module.exports = {
   webpack: (config, { dev, isServer }) => {
@@ -24,7 +25,10 @@ module.exports = {
     }
 
     let lessLoader = {
-      loader: 'less-loader'
+      loader: 'less-loader',
+      options: {
+        modifyVars: theme
+      }
     }
 
     let extractLESSPlugin = new ExtractTextPlugin({
@@ -61,24 +65,17 @@ module.exports = {
         }
       });
     }
-    // const exractCssPlugin = extractCss.extract({
-    //   use: [...loaders].filter(Boolean),
-    //   // Use style-loader in development
-    //   fallback: {
-    //     loader: 'style-loader',
-    //     options: {
-    //       sourceMap: dev,
-    //       importLoaders: 1
-    //     }
-    //   }
-    // });
 
-
+    if(!dev && !isServer) {
+      config.module.rules[0].use.options.plugins.push(['import', { libraryName: 'antd', style: !isServer }])
+    } else if(dev && !isServer) {
+      config.module.rules[1].use.options.plugins.push(['import', { libraryName: 'antd', style: !isServer }])
+    }
     config.module.rules.push({
       test: /\.less$/,
       use: lessUse
     })
-        // conf.plugins.push(new webpack.EnvironmentPlugin(localEnv));
+    // conf.plugins.push(new webpack.EnvironmentPlugin(localEnv));
     // if(!dev) {
     //     conf.plugins.push(
     //         new BundleAnalyzerPlugin({
@@ -91,77 +88,6 @@ module.exports = {
     //     );
     // }
 
-    // config.module.rules.push({
-    //   test: /\.(sc|c)ss$/,
-    //   use: [
-    //     {
-    //       loader: "emit-file-loader",
-    //       options: {
-    //         name: "dist/[path][name].[ext].js"
-    //       }
-    //     },
-    //     {
-    //       loader: "babel-loader",
-    //       options: {
-    //         babelrc: false,
-    //         extends: path.resolve(__dirname, "./.babelrc")
-    //       }
-    //     },
-    //     "styled-jsx-css-loader",
-    //     { loader: "postcss-loader", options: { sourceMap: false } },
-    //     {
-    //       loader: "sass-loader",
-    //       options: {
-    //         sourceMap: false
-    //       }
-    //     }
-    //   ]
-    // });
-    // config.module.rules.push({
-    //   test: /\.(le|c)ss$/,
-    //   use: [
-    //     {
-    //       loader: "emit-file-loader",
-    //       options: {
-    //         name: "dist/[path][name].[ext].js"
-    //       }
-    //     },
-    //     {
-    //       loader: "babel-loader",
-    //       options: {
-    //         babelrc: false,
-    //         extends: path.resolve(__dirname, "./.babelrc")
-    //       }
-    //     },
-    //     "styled-jsx-css-loader",
-    //     { loader: "postcss-loader", options: { sourceMap: dev } },
-    //     {
-    //       loader: "less-loader",
-    //       options: {
-    //         sourceMap: false
-    //       }
-    //     }
-    //   ]
-    // });
-
-    // config.module.rules.push(
-    //   {
-    //     test: /\.(css|scss)/,
-    //     loader: 'emit-file-loader',
-    //     options: {
-    //       name: 'dist/[path][name].[ext]'
-    //     },
-    //
-    //   },
-    //   {
-    //     test: /\.css$/,
-    //     loader: 'babel-loader!raw-loader'
-    //   },
-    //   {
-    //     test: /\.scss$/,
-    //     loader: 'babel-loader!raw-loader!sass-loader'
-    //   }
-    // )
     return config
   }
 }

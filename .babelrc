@@ -16,7 +16,6 @@
           "module-resolver",
           { "root": ["./"] }
         ],
-        ["import", { "libraryName": "antd" }],
         "react-intl"
       ]
     },
@@ -26,11 +25,12 @@
           "module-resolver",
           { "root": ["./"] }
         ],
-        ["import", { "libraryName": "antd" }],
+
         ["react-intl", {
           "messagesDir": "lang/.messages/"
         }]
       ]
-    }
+    },
+    "ignore": ["node_modules/antd"]
   }
 }
