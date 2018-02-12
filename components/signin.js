@@ -1,6 +1,5 @@
 import React from 'react'
 import Router from 'next/router'
-// import { Row, Col, Form, Input, Label, Button } from 'reactstrap'
 import Cookies from 'universal-cookie'
 import { NextAuth } from 'next-auth/client'
 

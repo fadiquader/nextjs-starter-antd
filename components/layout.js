@@ -2,9 +2,8 @@ import React from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-// import { Container, Row, Col, Nav, NavItem, Form, NavLink, Collapse,
-//          Navbar, NavbarToggler, NavbarBrand, Modal, ModalHeader, ModalBody,
-//          ModalFooter, ListGroup, ListGroupItem } from 'reactstrap'
+
+
 import { Button } from 'antd';
 import Signin from './signin'
 import { NextAuth } from 'next-auth/client'

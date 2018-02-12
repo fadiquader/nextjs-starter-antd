@@ -1,6 +1,5 @@
 /* global window */
 import React from 'react'
-import { Row, Col, Nav, NavItem, NavLink } from 'reactstrap'
 import Page from '../../components/page'
 import Layout from '../../components/layout'
 import AsyncData from '../../components/async-data'
@@ -66,24 +65,24 @@ export default class extends Page {
           possible, but in a way that still works in browsers that do not
           support JavaScript.
         </p>
-        <Row>
-          <Col xs="12" md="6">
+        <div>
+          <div xs="12" md="6">
             <h3>Server Side Rendering</h3>
             <p>
               When rendering on the server, this page will not be rendered until it
               has fetched the remote data. This ensures web crawlers and browsers that
               do not have JavaScript enabled will still see the full content of the page.
             </p>
-          </Col>
-          <Col xs="12" md="6">
+          </div>
+          <div xs="12" md="6">
             <h3>Client Side Rendering</h3>
             <p>
               When the page is rendered by browser that supports JavaScript it will
               load the page immediately, without data, and have the client fetch and
               insert the data while the page is loading.
             </p>
-          </Col>
-        </Row>
+          </div>
+        </div>
         <p>
           This page calls <a href="https://jsonplaceholder.typicode.com/">jsonplaceholder.typicode.com</a> using <a href="https://github.com/matthew-andrews/isomorphic-fetch">isomorphic-fetch</a>.
         </p>

@@ -2,7 +2,6 @@ import React from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
 import fetch from 'isomorphic-fetch'
-import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { NextAuth } from 'next-auth/client'
 import Page from '../components/page'
 import Layout from '../components/layout'
@@ -129,72 +128,72 @@ export default class extends Page {
       
       return (
         <Layout {...this.props} navmenu={false}>
-          <Row className="mb-1">
-            <Col xs="12">
+          <div className="mb-1">
+            <div >
               <h1 className="display-2">Your Account</h1>
               <p className="lead text-muted">
                 Edit your profile and link accounts
               </p>
-            </Col>
-          </Row>
+            </div>
+          </div>
           {alert}
-          <Row className="mt-4">
-            <Col xs="12" md="8" lg="9">
-              <Form method="post" action="/account/user" onSubmit={this.onSubmit}>
-                <Input name="_csrf" type="hidden" value={this.state.session.csrfToken} onChange={()=>{}}/>
-                <FormGroup row>
-                  <Label sm={2}>Name:</Label>
-                  <Col sm={10} md={8}>
-                    <Input name="name" value={this.state.name} onChange={this.handleChange}/>
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Label sm={2}>Email:</Label>
-                  <Col sm={10} md={8}>
-                    <Input name="email" value={(this.state.email.match(/.*@localhost\.localdomain$/)) ? '' : this.state.email} onChange={this.handleChange}/>
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Col sm={12} md={10}>
+          <div className="mt-4">
+            <div xs="12" md="8" lg="9">
+              <form method="post" action="/account/user" onSubmit={this.onSubmit}>
+                <input name="_csrf" type="hidden" value={this.state.session.csrfToken} onChange={()=>{}}/>
+                <div row>
+                  <label sm={2}>Name:</label>
+                  <div sm={10} md={8}>
+                    <input name="name" value={this.state.name} onChange={this.handleChange}/>
+                  </div>
+                </div>
+                <div >
+                  <label>Email:</label>
+                  <div >
+                    <input name="email" value={(this.state.email.match(/.*@localhost\.localdomain$/)) ? '' : this.state.email} onChange={this.handleChange}/>
+                  </div>
+                </div>
+                <div >
+                  <div>
                     <p className="text-right">
-                      <Button color="primary" type="submit">Save Changes</Button>
+                      <button color="primary" type="submit">Save Changes</button>
                     </p>
-                  </Col>
-                </FormGroup>
-              </Form>
-            </Col>
-            <Col xs="12" md="4" lg="3">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div xs="12" md="4" lg="3">
             <LinkAccounts
               session={this.props.session}
               linkedAccounts={this.props.linkedAccounts}
               />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
+            </div>
+          </div>
+          <div>
+            <div>
               <h2>Delete your account</h2>
               <p>
                 If you delete your account it will be erased immediately.
                 You can sign up again at any time.
               </p>
-              <Form id="signout" method="post" action="/account/delete">
+              <div id="signout" method="post" action="/account/delete">
                 <input name="_csrf" type="hidden" value={this.state.session.csrfToken}/>
-                <Button type="submit" color="outline-danger"><span className="icon ion-md-trash mr-1"></span> Delete Account</Button>
-              </Form>
-            </Col>
-          </Row>
+                <button type="submit" color="outline-danger"><span className="icon ion-md-trash mr-1"></span> Delete Account</button>
+              </div>
+            </div>
+          </div>
         </Layout>
       )
     } else {
       return (
         <Layout {...this.props} navmenu={false}>
-          <Row>
-            <Col xs="12" className="text-center pt-5 pb-5">
+          <div>
+            <div xs="12" className="text-center pt-5 pb-5">
               <p className="lead m-0">
                 <Link href="/auth"><a>Sign in to manage your profile</a></Link>
               </p>
-            </Col>
-          </Row>
+            </div>
+          </div>
         </Layout>
       )
     }

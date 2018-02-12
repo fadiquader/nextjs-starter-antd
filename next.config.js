@@ -69,7 +69,10 @@ module.exports = {
       });
     }
 
-    if(!dev && !isServer) {
+    if(!dev && isServer) {
+      config.module.rules[0].use.options.plugins.push(['import', { libraryName: 'antd' }])
+    }
+    else if(!dev && !isServer) {
       config.module.rules[0].use.options.plugins.push(['import', { libraryName: 'antd', style: !isServer }])
     } else if(dev && !isServer) {
       config.module.rules[1].use.options.plugins.push(['import', { libraryName: 'antd', style: !isServer }])
