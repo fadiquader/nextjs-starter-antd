@@ -8,15 +8,13 @@ import Page from '../components/page'
 import Layout from '../components/layout'
 import NProgress from '../components/NProgress'
 
-// if(process.env.NODE_ENV === 'development') {
-//   require('../styles/index.less')
-// }
 const {description} = defineMessages({
   description: {
     id: 'description',
     defaultMessage: 'An example app integrating React Intl with Next.js'
   }
-})
+});
+
 class Home extends Page {
   render() {
     return (

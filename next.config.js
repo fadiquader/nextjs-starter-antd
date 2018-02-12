@@ -3,12 +3,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const theme = require('./theme');
 
 module.exports = {
-  webpack: (config, { dev, isServer }) => {
+  webpack: (config, { dev, isServer, buildId }) => {
     config.node = {
       fs: "empty"
     };
-
-    let loaders = [];
     let lessUse = [];
     const cssLoader = {
       loader: isServer ? 'css-loader/locals' : 'css-loader',
@@ -21,7 +19,12 @@ module.exports = {
     }
 
     let postcssLoader = {
-      loader: 'postcss-loader'
+      loader: 'postcss-loader',
+      options: {
+        config: {
+          path: 'postcss.config.js'
+        }
+      }
     }
 
     let lessLoader = {
@@ -32,7 +35,7 @@ module.exports = {
     }
 
     let extractLESSPlugin = new ExtractTextPlugin({
-      filename: 'static/style-ant.css',
+      filename: 'static/style-ant.'+buildId+'.css',
     });
     let extractCSSPlugin = new ExtractTextPlugin({
       filename: 'static/style.css',
@@ -41,12 +44,12 @@ module.exports = {
     config.plugins.push(extractLESSPlugin)
     config.plugins.push(extractCSSPlugin)
     //
-    // if (!extractCSSPlugin.options.disable) {
-    //   extractCSSPlugin.options.disable = dev
-    // }
-    // if (!extractLESSPlugin.options.disable) {
-    //   extractLESSPlugin.options.disable = dev
-    // }
+    if (!extractCSSPlugin.options.disable) {
+      extractCSSPlugin.options.disable = dev
+    }
+    if (!extractLESSPlugin.options.disable) {
+      extractLESSPlugin.options.disable = dev
+    }
 
     if (isServer && cssLoader.options.modules) {
       lessUse = [cssLoader, postcssLoader, lessLoader].filter(Boolean)
@@ -74,9 +77,8 @@ module.exports = {
     config.module.rules.push({
       test: /\.less$/,
       use: lessUse
-    })
-    // conf.plugins.push(new webpack.EnvironmentPlugin(localEnv));
-    // if(!dev) {
+    });
+    // use webpack analyzer
     //     conf.plugins.push(
     //         new BundleAnalyzerPlugin({
     //             // For all options see https://github.com/th0r/webpack-bundle-analyzer#as-plugin
@@ -86,7 +88,6 @@ module.exports = {
     //             openAnalyzer: false
     //         })
     //     );
-    // }
 
     return config
   }

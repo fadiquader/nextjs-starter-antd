@@ -1,7 +1,7 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import flush from "styled-jsx/server";
 
-
+const isProd = process.env.NODE_ENV === 'production';
 export default class DefaultDocument extends Document {
   static async getInitialProps (context) {
     // return await Document.getInitialProps(ctx)
@@ -25,13 +25,16 @@ export default class DefaultDocument extends Document {
     * Here we use _document.js to add a "lang" propery to the HTML object if
     * one is set on the page.
     **/
-    const lang = this.props.__NEXT_DATA__.props.locale || 'en'
+    const lang = this.props.__NEXT_DATA__.props.locale || 'en';
     const polyfill = `https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.${lang}`
-      return (
+
+    const buildId  = !this.props.dev ? this.props.__NEXT_DATA__.buildId : null
+
+    return (
       <html lang={lang}>
         <Head>
           {!this.props.dev && (
-            <link rel="stylesheet" href={`/_next/static/style-ant.css`} />
+            <link rel="stylesheet" href={`/_next/static/style-ant.${buildId}.css`} />
           )}
         </Head>
         <body>
