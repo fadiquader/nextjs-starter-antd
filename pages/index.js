@@ -24,8 +24,7 @@ class Home extends Page {
           background: 'radial-gradient(ellipse at center, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%)',
           boxShadow: 'inset 0 0 100px rgba(0,0,0,0.1)'
           }}>
-          <div className="mt-2 mb-2">
-            <Button>Hola Ant!</Button>
+          <div>
             <h1 className="display-2 mb-3" style={{fontWeight: 300}}>
               <span style={{fontWeight: 600}}>
                 <span className="mr-3">▲</span>

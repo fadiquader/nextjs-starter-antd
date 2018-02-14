@@ -1,5 +1,5 @@
 import Document, { Head, Main, NextScript } from 'next/document'
-import flush from "styled-jsx/server";
+import flush, { flushToHTML } from "styled-jsx/server";
 
 const isProd = process.env.NODE_ENV === 'production';
 export default class DefaultDocument extends Document {
@@ -9,6 +9,8 @@ export default class DefaultDocument extends Document {
     const { html, head, errorHtml, chunks } = context.renderPage();
     const {req: {locale, localeDataScript}} = context;
     const styles = flush();
+    // const styles = flushToHTML();
+    // console.log('stylee ', styles)
     return {
       ...props,
       locale: locale,
@@ -25,10 +27,11 @@ export default class DefaultDocument extends Document {
     * Here we use _document.js to add a "lang" propery to the HTML object if
     * one is set on the page.
     **/
-    const lang = this.props.__NEXT_DATA__.props.locale || 'en';
+    const { dev, __NEXT_DATA__ } = this.props;
+    const lang = __NEXT_DATA__.props.locale || 'en';
     const polyfill = `https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.${lang}`
-
-    const buildId  = !this.props.dev ? this.props.__NEXT_DATA__.buildId : null
+    let { assetPrefix } = __NEXT_DATA__
+    const buildId  = !dev ? __NEXT_DATA__.buildId : null
 
     return (
       <html lang={lang}>
@@ -36,6 +39,7 @@ export default class DefaultDocument extends Document {
           {!this.props.dev && (
             <link rel="stylesheet" href={`/_next/static/style-ant.${buildId}.css`} />
           )}
+          {/*{this.props.styles || ''}*/}
         </Head>
         <body>
           {this.props.customValue}
