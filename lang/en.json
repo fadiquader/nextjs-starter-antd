@@ -1,4 +1,6 @@
 {
   "description": "An example app integrating React Intl with Next.js",
-  "greeting": "Hello, World!"
+  "greeting": "Hello, World!",
+  "projectName": "Next.js starter",
+  "projectDescription": "Reference and template for react projects "
 }

@@ -68,7 +68,6 @@ class NavBar extends PureComponent {
           <Menu.Item key="1234">
             <UserMenu session={session} signinBtn={signinBtn} />
           </Menu.Item>
-
         </Menu>
         <style jsx>{styles}</style>
       </Header>

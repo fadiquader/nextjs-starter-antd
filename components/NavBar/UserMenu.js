@@ -20,7 +20,7 @@ export class UserMenu extends React.Component {
   }
 
   async _handleSignoutSubmit(event) {
-    event.preventDefault()
+    // event.preventDefault()
 
     // Save current URL so user is redirected back here after signing out
     const cookies = new Cookies()
@@ -45,32 +45,40 @@ export class UserMenu extends React.Component {
     })
   }
 
+  handleMenuClick = e => {
+    if(e.key === "logout") {
+      this.handleSignoutSubmit()
+    }
+  }
   render() {
     const { session, signinBtn } = this.props;
     if (session && session.user) {
       const isAdmin = session.user.admin
       // If signed in display user dropdown menu
       const menu = (
-        <Menu>
-          <Menu.Item>
+        <Menu onClick={this.handleMenuClick}>
+          <Menu.Item  key="account">
             <Link prefetch href="/account">
               <a href="/account">Your Account</a>
             </Link>
           </Menu.Item>
-          {isAdmin && <Menu.Item>
+          {isAdmin && <Menu.Item  key="admin">
             <Link prefetch href="/admin">
               <a href="/admin">Admin</a>
             </Link>
           </Menu.Item>}
-          <Menu.Item>
-            <form id="signout" method="post" action="/auth/signout" onSubmit={this.handleSignoutSubmit}>
-              <input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>
-              <Button type="submit">
-                <Icon type="logout" />
-                Sign out
-              </Button>
-            </form>
+          <Menu.Item  key="logout">
+            Sign out
           </Menu.Item>
+          {/*<Menu.Item  key="logout">*/}
+            {/*<form id="signout" method="post" action="/auth/signout" onSubmit={this.handleSignoutSubmit}>*/}
+              {/*<input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>*/}
+              {/*<Button type="submit">*/}
+                {/*<Icon type="logout" />*/}
+                {/*Sign out*/}
+              {/*</Button>*/}
+            {/*</form>*/}
+          {/*</Menu.Item>*/}
         </Menu>
       );
       return (
