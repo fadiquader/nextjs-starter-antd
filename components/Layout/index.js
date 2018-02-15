@@ -3,36 +3,20 @@ import PropTypes from 'prop-types'
 import Router from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-
-import { Button, Layout as AntLayout, Dropdown, Menu, Icon, Row, Col } from 'antd';
-import Signin from './signin'
+import { FormattedDate } from 'react-intl';
+import { Button, Layout as AntLayout } from 'antd';
+import Signin from '../signin'
 import { NextAuth } from 'next-auth/client'
 import Cookies from 'universal-cookie'
-import Package from '../package'
-import PageWithIntl from '../components/PageWithIntl'
-import NavBar from '../components/NavBar'
+import Package from '../../package'
+import PageWithIntl from '../PageWithIntl'
+import NavBar from '../NavBar'
 
-import '../styles/main.scss';
+import mainStyles from '../../styles/main.scss';
 
 const { Content } = AntLayout;
-export class Layout extends React.Component {
-  static childContextTypes = {
-    _documentProps: PropTypes.any
-  }
-  getChildContext () {
-    return { _documentProps: this.props }
-  }
 
-  static propTypes() {
-    return {
-      session: React.PropTypes.object.isRequired,
-      providers: React.PropTypes.object.isRequired,
-      children: React.PropTypes.object.isRequired,
-      fluid: React.PropTypes.boolean,
-      navmenu: React.PropTypes.boolean,
-      signinBtn: React.PropTypes.boolean
-    }
-  }
+export class Layout extends React.Component {
   
   constructor(props) {
     super(props)
@@ -40,7 +24,8 @@ export class Layout extends React.Component {
       navOpen: false,
       modal: false,
       providers: null
-    }
+    };
+
     this.toggleModal = this.toggleModal.bind(this)
     this.onChangeLanguage = this.onChangeLanguage.bind(this)
   }
@@ -71,21 +56,19 @@ export class Layout extends React.Component {
     // console.log(this.context._documentProps.__NEXT_DATA__)
     return (
       <React.Fragment>
+
         <Head>
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <title>{this.props.title || 'Next.js Starter Project'}</title>
-          {/*<style dangerouslySetInnerHTML={{__html: Styles}}/>*/}
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js"/>
         </Head>
+        <style jsx global>{mainStyles}</style>
         <AntLayout>
           <NavBar name={Package.name} session={this.props.session} signinBtn={this.props.signinBtn} />
-          {/*<UserMenu session={this.props.session} toggleModal={this.toggleModal} signinBtn={this.props.signinBtn}/>*/}
           <Content>
             {this.props.children}
-            <div
-              // fluid={this.props.fluid}
-            >
+            <div>
               <hr className="mt-3"/>
               <p className="text-muted small">
                 <Link href="https://github.com/iaincollins/nextjs-starter"><a className="text-muted font-weight-bold"><span className="icon ion-logo-github"/> {Package.name} {Package.version}</a></Link>
@@ -94,7 +77,7 @@ export class Layout extends React.Component {
                 <span> &amp; </span>
                 <Link href="https://github.com/facebook/react"><a className="text-muted font-weight-bold">React {Package.dependencies.react.replace('^', '')}</a></Link>
                 .
-                <span className="ml-2">&copy; {new Date().getYear() + 1900}.</span>
+                <span className="ml-2">&copy; <FormattedDate value={new Date()} year='numeric' month='long' day='2-digit'/>.</span>
               </p>
             </div>
           </Content>

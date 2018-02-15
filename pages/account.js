@@ -2,10 +2,11 @@ import React from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
 import fetch from 'isomorphic-fetch'
-import { NextAuth } from 'next-auth/client'
-import Page from '../components/page'
-import Layout from '../components/layout'
 import Cookies from 'universal-cookie'
+import { NextAuth } from 'next-auth/client'
+
+import Page from '../components/page'
+import Layout from '../components/Layout'
 
 export default class extends Page {
 
@@ -128,7 +129,7 @@ export default class extends Page {
       
       return (
         <Layout {...this.props} navmenu={false}>
-          <div className="mb-1">
+          <div className="container">
             <div >
               <h1 className="display-2">Your Account</h1>
               <p className="lead text-muted">

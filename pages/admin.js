@@ -7,7 +7,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter/prism'
 import { atomDark as SyntaxHighlighterTheme } from 'react-syntax-highlighter/styles/prism'
 
 import Page from '../components/page'
-import Layout from '../components/layout'
+import Layout from '../components/Layout'
 import Loader from '../components/loader'
 import User from '../models/user'
 import NProgress from '../components/NProgress'

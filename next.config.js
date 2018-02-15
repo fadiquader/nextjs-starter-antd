@@ -59,7 +59,7 @@ module.exports = {
     });
 
     config.plugins.push(extractLESSPlugin)
-    config.plugins.push(extractSCSSPlugin)
+    // config.plugins.push(extractSCSSPlugin)
     config.plugins.push(extractCSSPlugin)
     //
     // if (!extractCSSPlugin.options.disable) {

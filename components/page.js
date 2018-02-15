@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout'
+import Layout from '../components/Layout'
 import { NextAuth } from 'next-auth/client'
 import Lang from '../services/Lang';
 

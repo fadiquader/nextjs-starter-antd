@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import { NextAuth } from 'next-auth/client'
 import Page from '../../components/page'
-import Layout from '../../components/layout'
+import Layout from '../../components/Layout'
 import SignIn from '../../components/signin'
 
 export default class extends Page {

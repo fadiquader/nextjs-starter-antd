@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Page from '../../components/page'
-import Layout from '../../components/layout'
+import Layout from '../../components/Layout'
 
 export default class extends Page {
 
