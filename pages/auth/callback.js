@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import Router from 'next/router'
 import Cookies from 'universal-cookie'
 import { NextAuth } from 'next-auth/client'

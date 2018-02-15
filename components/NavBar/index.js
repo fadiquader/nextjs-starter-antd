@@ -60,7 +60,7 @@ class NavBar extends PureComponent {
         <Menu mode="horizontal" theme="dark" selectedKeys={[]} style={{ lineHeight: '64px' }}>
           <Menu.Item key="123">
             <Dropdown overlay={navigateMenu}>
-              <a className="ant-dropdown-link">
+              <a >
                 Examples <Icon type="down" />
               </a>
             </Dropdown>

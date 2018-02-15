@@ -1,11 +1,12 @@
 import React from 'react'
 import Router from 'next/router'
+import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import { NextAuth } from 'next-auth/client'
-import { Icon, Input } from 'antd';
+
+import { Icon, Button, Dropdown, Menu } from 'antd';
 
 import SigninModal from './SigninModal';
-import { AdminMenuItem } from './AdminMenuItem';
 
 export class UserMenu extends React.Component {
   constructor(props) {
@@ -47,37 +48,38 @@ export class UserMenu extends React.Component {
   render() {
     const { session, signinBtn } = this.props;
     if (session && session.user) {
+      const isAdmin = session.user.admin
       // If signed in display user dropdown menu
+      const menu = (
+        <Menu>
+          <Menu.Item>
+            <Link prefetch href="/account">
+              <a href="/account">Your Account</a>
+            </Link>
+          </Menu.Item>
+          {isAdmin && <Menu.Item>
+            <Link prefetch href="/admin">
+              <a href="/admin">Admin</a>
+            </Link>
+          </Menu.Item>}
+          <Menu.Item>
+            <form id="signout" method="post" action="/auth/signout" onSubmit={this.handleSignoutSubmit}>
+              <input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>
+              <Button type="submit">
+                <Icon type="logout" />
+                Sign out
+              </Button>
+            </form>
+          </Menu.Item>
+        </Menu>
+      );
       return (
-        <nav>
-          <div tabIndex="2" className="dropdown nojs-dropdown">
-            <div className="nav-item">
-              <span className="dropdown-toggle nav-link d-none d-md-block">
-                <span className="icon ion-md-contact" style={{fontSize: '2em', position: 'absolute', top: -5, left: -25}}></span>
-              </span>
-              <span className="dropdown-toggle nav-link d-block d-md-none">
-                <span className="icon ion-md-contact mr-2"></span>
-                {session.user.name || session.user.email}
-              </span>
-            </div>
-            <div className="dropdown-menu">
-              <Link prefetch href="/account">
-                <a href="/account" className="dropdown-item"><span className="icon ion-md-person mr-1"></span> Your Account</a>
-              </Link>
-              <AdminMenuItem {...this.props}/>
-              <div className="dropdown-divider d-none d-md-block"/>
-              <div className="dropdown-item p-0">
-                <form id="signout" method="post" action="/auth/signout" onSubmit={this.handleSignoutSubmit}>
-                  <input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>
-                  <Input type="submit" className="pl-4 rounded-0 text-left dropdown-item">
-                    <Icon type="logout" />
-                    Sign out
-                  </Input>
-                </form>
-              </div>
-            </div>
-          </div>
-        </nav>
+      <Dropdown overlay={menu}>
+        <a>
+          {session.user.name || session.user.email} <Icon type="down" />
+        </a>
+      </Dropdown>
+
       )
     } if (signinBtn === false) {
       // If not signed in, don't display sign in button if disabled
