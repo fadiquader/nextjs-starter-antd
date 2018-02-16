@@ -1,5 +1,5 @@
 module.exports = {
-  '@primary-color': '#d1003f',
+  '@primary-color': '#3F51B5',
   '@border-radius-base': '2px',
   '@font-family': 'Roboto, Lato, sans-serif',
 };

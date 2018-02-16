@@ -4,11 +4,24 @@ import Link from 'next/link'
 import fetch from 'isomorphic-fetch'
 import Cookies from 'universal-cookie'
 import { NextAuth } from 'next-auth/client'
-
+import { Button, Input, Form, Row, Col } from 'antd';
 import Page from '../components/page'
 import Layout from '../components/Layout'
 
-export default class extends Page {
+const FormItem = Form.Item;
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
+
+export class Account extends Page {
 
   static async getInitialProps({req}) {
     let props = await super.getInitialProps({req})
@@ -78,55 +91,58 @@ export default class extends Page {
     this.setState({
       alertText: null,
       alertStyle: null
-    })
-    
-    const formData = {
-      _csrf: await NextAuth.csrfToken(),
-      name: this.state.name || '',
-      email: this.state.email || ''
-    }
-    
-    // URL encode form
-    // Note: This uses a x-www-form-urlencoded rather than sending JSON so that
-    // the form also in browsers without JavaScript
-    const encodedForm = Object.keys(formData).map((key) => {
-      return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key])
-    }).join('&')
-    
-    fetch('/account/user', {
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: encodedForm
-    })
-    .then(async res => {
-      if (res.status === 200) {
-        this.getProfile()
-        this.setState({
-          alertText: 'Changes to your profile have been saved',
-          alertStyle: 'alert-success',
+    });
+
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
+      if (!err) {
+        const formData = {
+          ...values,
+            _csrf: await NextAuth.csrfToken(),
+      };
+        // URL encode form
+        // Note: This uses a x-www-form-urlencoded rather than sending JSON so that
+        // the form also in browsers without JavaScript
+        const encodedForm = Object.keys(formData).map((key) => {
+          return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key])
+        }).join('&')
+
+        fetch('/account/user', {
+          credentials: 'include',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: encodedForm
         })
-        // Force update session so that changes to name or email are reflected
-        // immediately in the navbar (as we pass our session to it).
-        this.setState({
-          session: await NextAuth.init({force: true}), // Update session data
-        })
-      } else {
-        this.setState({
-          session: await NextAuth.init({force: true}), // Update session data
-          alertText: 'Failed to save changes to your profile',
-          alertStyle: 'alert-danger',
-        })
+          .then(async res => {
+            if (res.status === 200) {
+              this.getProfile()
+              this.setState({
+                alertText: 'Changes to your profile have been saved',
+                alertStyle: 'alert-success',
+              })
+              // Force update session so that changes to name or email are reflected
+              // immediately in the navbar (as we pass our session to it).
+              this.setState({
+                session: await NextAuth.init({force: true}), // Update session data
+              })
+            } else {
+              this.setState({
+                session: await NextAuth.init({force: true}), // Update session data
+                alertText: 'Failed to save changes to your profile',
+                alertStyle: 'alert-danger',
+              })
+            }
+          })
       }
-    })
+    });
   }
   
   render() {
     if (this.state.isSignedIn === true) {
       const alert = (this.state.alertText === null) ? <div/> : <div className={`alert ${this.state.alertStyle}`} role="alert">{this.state.alertText}</div>
-      
+      const { getFieldDecorator } = this.props.form;
+
       return (
         <Layout {...this.props} navmenu={false}>
           <div className="container">
@@ -136,50 +152,71 @@ export default class extends Page {
                 Edit your profile and link accounts
               </p>
             </div>
-          </div>
-          {alert}
-          <div className="mt-4">
-            <div xs="12" md="8" lg="9">
-              <form method="post" action="/account/user" onSubmit={this.onSubmit}>
-                <input name="_csrf" type="hidden" value={this.state.session.csrfToken} onChange={()=>{}}/>
-                <div row>
-                  <label sm={2}>Name:</label>
-                  <div sm={10} md={8}>
-                    <input name="name" value={this.state.name} onChange={this.handleChange}/>
-                  </div>
-                </div>
-                <div >
-                  <label>Email:</label>
-                  <div >
-                    <input name="email" value={(this.state.email.match(/.*@localhost\.localdomain$/)) ? '' : this.state.email} onChange={this.handleChange}/>
-                  </div>
-                </div>
-                <div >
-                  <div>
-                    <p className="text-right">
-                      <button color="primary" type="submit">Save Changes</button>
-                    </p>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div xs="12" md="4" lg="3">
-            <LinkAccounts
-              session={this.props.session}
-              linkedAccounts={this.props.linkedAccounts}
-              />
-            </div>
-          </div>
-          <div>
+            {alert}
+            <Row type="flex" gutter={32}>
+              <Col xs={24} md={16} lg={16}>
+                <Form method="post" action="/account/user" onSubmit={this.onSubmit}>
+                  {/*<FormItem>*/}
+                  {/*{getFieldDecorator('_csrf', {*/}
+                  {/*})(*/}
+
+                  {/*)}*/}
+                  <input name="_csrf"
+                         type="hidden"
+                         value={this.state.session.csrfToken}
+                  />
+                  <FormItem
+                    label="Name:">
+                    {getFieldDecorator('name', {
+                      initialValue:  this.state.name,
+                      rules: [{
+                        required: true,
+                        message: 'Please input your name',
+                      }],
+                    })(
+                      <Input placeholder="Please input your name" />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    label="Email:">
+                    {getFieldDecorator('email', {
+                      initialValue:  this.state.email,
+                      rules: [
+                        {
+                          type: 'email',
+                          message: 'The input is not valid E-mail!',
+                        },
+                        {
+                          required: true,
+                          message: 'Please input your name',
+                        }],
+                    })(
+                      <Input placeholder="Please input your name" />
+                    )}
+                  </FormItem>
+                  <FormItem>
+                    <Button htmlType="submit" type="primary">Save Changes</Button>
+                  </FormItem>
+                </Form>
+              </Col>
+              <Col xs={24} md={8} lg={8}>
+                <LinkAccounts
+                  session={this.props.session}
+                  linkedAccounts={this.props.linkedAccounts}
+                />
+              </Col>
+            </Row>
             <div>
-              <h2>Delete your account</h2>
-              <p>
-                If you delete your account it will be erased immediately.
-                You can sign up again at any time.
-              </p>
-              <div id="signout" method="post" action="/account/delete">
-                <input name="_csrf" type="hidden" value={this.state.session.csrfToken}/>
-                <button type="submit" color="outline-danger"><span className="icon ion-md-trash mr-1"></span> Delete Account</button>
+              <div>
+                <h2>Delete your account</h2>
+                <p>
+                  If you delete your account it will be erased immediately.
+                  You can sign up again at any time.
+                </p>
+                <form id="signout" method="post" action="/account/delete">
+                  <input name="_csrf" type="hidden" value={this.state.session.csrfToken}/>
+                  <Button htmlType="submit" type="danger">Delete Account</Button>
+                </form>
               </div>
             </div>
           </div>
@@ -222,9 +259,9 @@ export class LinkAccount extends React.Component {
         <form method="post" action={`/auth/oauth/${this.props.provider.toLowerCase()}/unlink`}>
           <input name="_csrf" type="hidden" value={this.props.session.csrfToken}/>
           <p>
-            <button className="btn btn-block btn-outline-danger" type="submit">
+            <Button type="danger" htmlType="submit">
               Unlink from {this.props.provider}
-            </button>
+            </Button>
           </p>
         </form>
       )
@@ -239,3 +276,5 @@ export class LinkAccount extends React.Component {
     }
   }
 }
+
+export default Form.create()(Account);

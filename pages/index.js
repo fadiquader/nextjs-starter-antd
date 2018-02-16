@@ -24,14 +24,17 @@ class Home extends Page {
                 Next.js
               </span>
               <br className="v-block d-lg-none"/>
-              <FormattedMessage id='projectName' />
+              <FormattedMessage id='projectName' defaultMessage="Starter Project" />
             </h1>
             <p className="lead mb-5">
-              <FormattedMessage id='projectDescription' />
+              <FormattedMessage id='projectDescription' defaultMessage="A reference and template for react projects" />
             </p>
 
             <p className="text-right">
-              <a href="https://github.com/iaincollins/nextjs-starter" className="btn btn-outline-light btn-lg"><span className="icon ion-logo-github mr-2"/> Download from GitHub</a>
+              <a href="https://github.com/iaincollins/nextjs-starter"
+                 className="ant-btn ant-btn-lg">
+                Download from GitHub
+              </a>
             </p>
             <style jsx>{`
               .display-2  {
@@ -81,9 +84,7 @@ class Home extends Page {
             <Col xs={24} sm={8}>
               <h4 className="text-center mb-4">CSS / SCSS</h4>
               <div>
-                <div><a className="text-dark" href="https://getbootstrap.com">Bootstrap 4.0</a></div>
-                <div><a className="text-dark" href="http://reactstrap.github.io/">Reactstrap</a></div>
-                <div><a className="text-dark" href="https://ionicframework.com/docs/ionicons/">Ionicons</a></div>
+                <div><a className="text-dark" href="https://ant.design">Ant Design</a></div>
                 <div><a className="text-dark" href="http://sass-lang.com/">SASS</a></div>
               </div>
             </Col>

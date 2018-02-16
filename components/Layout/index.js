@@ -4,10 +4,10 @@ import Router from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import { FormattedDate } from 'react-intl';
-import { Button, Layout as AntLayout } from 'antd';
-import Signin from '../signin'
+import { Layout as AntLayout } from 'antd';
 import { NextAuth } from 'next-auth/client'
 import Cookies from 'universal-cookie'
+// project files
 import Package from '../../package'
 import PageWithIntl from '../PageWithIntl'
 import NavBar from '../NavBar'
